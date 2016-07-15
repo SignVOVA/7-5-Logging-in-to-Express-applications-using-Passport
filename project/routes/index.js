@@ -53,7 +53,7 @@ module.exports = function (flights) {
 
 	functions.list = function (req, res) {
 		res.render('list', {
-			title: 'All Flights', 
+			title: 'All Flights',
 			flights: flights});
 	};
 
@@ -71,6 +71,22 @@ module.exports = function (flights) {
 				});
 			}
 		});
+	};
+
+	functions.login = function(req, res) {
+		// The first login is rendering the login jade template and we are passing the title to that view as a variable
+		res.render('login', {title: 'Log in'});
+	};
+
+	functions.user = function(req, res) {
+		//First we want to check if user is defined in our session
+		if (req.session.passport.user === undefined) {
+			res.redirect('/login');
+		} else {
+			res.render('user', {title: 'Welcome!',
+				user: req.user
+		})
+		}
 	};
 
 	return functions;
