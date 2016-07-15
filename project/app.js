@@ -6,8 +6,10 @@
 module.exports = function (flights, db) {
 	var express = require('express');
 	var MongoStore = require('connect-mongo')(express);
+	// Lets define out passport module by using our custom authentication file we created. We use passport as midleware of our application
+	var passport = require('./auth');
 	var routes = require('./routes')(flights);
-	var path = require('path');	
+	var path = require('path');
 	var app = express();
 
 	// all environments
@@ -23,6 +25,10 @@ module.exports = function (flights, db) {
 			mongoose_connection: db
 		})
 	}));
+	// Let use passport as a midleware of our application
+	app.use(passport.initialize());
+	// On this line we are telling passport to use a session in express. We telling passport to store a session.
+	app.use(passport.session());
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(function (req, res, next) {
@@ -42,7 +48,7 @@ module.exports = function (flights, db) {
 	app.get('/list', routes.list);
 	app.get('/arrivals', routes.arrivals);
 
+	
+
 	return app;
 }
-
-
