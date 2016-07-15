@@ -6,10 +6,11 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "connect-mongo": "~0.3.3",
     "express": "3.4.0",
     "jade": "*",
     "mongoose": "~3.6.19",
-    "connect-mongo": "~0.3.3"
+    "passport": "^0.3.2"
   },
   "devDependencies": {
     "mocha": "~1.12.1",
