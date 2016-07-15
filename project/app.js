@@ -48,7 +48,18 @@ module.exports = function (flights, db) {
 	app.get('/list', routes.list);
 	app.get('/arrivals', routes.arrivals);
 
-	
+	// create the login route link to our routes. Also we handle the post request to handle authentication
+	app.get('/login', routes.login);
+	// Authenticate takes 2 args. The 1st arg - is the strategy we want to use.
+	// The 2nd arg is
+	app.post('/login', passport.authenticate('local', {
+		// If the login fails we want to redirect the user to the login page
+		failureRedirect: '/login',
+		// The second is the success redirect. In this case we want to redirect the user to the user page
+		successRedirect: '/user'
+	}));
+
+	app.get('/user', routes.user);
 
 	return app;
 }
